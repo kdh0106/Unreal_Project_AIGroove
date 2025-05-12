@@ -1,0 +1,49 @@
+<root xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!-- 로그 출력 -->
+	<init>
+		<log text="AIGroovePlugin: Copying Java files..." />
+
+		<!-- AIGFilePickerHelper.java 복사 -->
+		<copyFile
+            src="$S(PluginDir)/Java/src/com/GameFourMan/AIGroove/AIGFilePickerHelper.java"
+            dst="$S(BuildDir)/src/com/GameFourMan/AIGroove/AIGFilePickerHelper.java" />
+	</init>
+
+	<!-- Java 빌드 경로 등록 -->
+	<androidSourceDirectories>
+		<add value="$S(BuildDir)/src" />
+	</androidSourceDirectories>
+
+	<androidGradlePlugin>
+		<additionalGradleFile>$S(PluginDir)/Source/AIGroovePlugin/Android/build.gradle</additionalGradleFile>
+	</androidGradlePlugin>
+
+	<gameActivityOnActivityResultAdditions>
+		<insert>
+			if (com.GameFourMan.AIGroove.AIGFilePickerHelper.handleActivityResult(requestCode, resultCode, data)) return;
+		</insert>
+	</gameActivityOnActivityResultAdditions>
+
+	<proguardAdditions>
+		<insert>-keep class com.GameFourMan.AIGroove.** { *; }</insert>
+	</proguardAdditions>
+
+	<!-- <androidManifestUpdates>
+		<replace>
+			<activity android:name="com.GameFourMan.AIGroove.MyGameActivity"
+					android:exported="true"
+					android:launchMode="singleTask"
+					android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+					android:hardwareAccelerated="true"
+					android:theme="@style/Theme.UnrealEngine.Splash"
+					android:screenOrientation="landscape">
+				<intent-filter>
+					<action android:name="android.intent.action.MAIN"/>
+					<category android:name="android.intent.category.LAUNCHER"/>
+				</intent-filter>
+			</activity>
+		</replace>
+	</androidManifestUpdates> -->
+
+</root>
